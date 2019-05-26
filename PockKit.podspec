@@ -24,11 +24,18 @@ Documentation can be found at https://kit.pock.dev/docs/
 
   s.platform = :osx
   s.osx.deployment_target = "10.12.2"
+  s.swift_version = "4.2"
   
-  s.source_files = 'PockKit/**/*'
-
   s.frameworks = 'Foundation'
   s.frameworks = 'AppKit'
+  
+  s.subspec 'Protocols' do |ss|
+    ss.source_files = 'PockKit/Protocols/**/*'
+  end
+  
+  s.subspec 'Sources' do |ss|
+    ss.source_files = 'PockKit/Sources/**/*'
+  end
   
   s.dependency 'SnapKit'
 
