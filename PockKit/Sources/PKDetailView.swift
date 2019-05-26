@@ -68,7 +68,7 @@ open class PKDetailView: PKView {
             })
             titleView.sizeToFit()
             titleView.snp.makeConstraints({ maker in
-                maker.height.equalTo(titleView.frame.height)
+                maker.height.equalTo(self).dividedBy(2)
                 maker.left.equalTo(imageView.snp.right).offset(4)
                 maker.top.equalTo(imageView).inset(4)
                 maker.right.equalTo(self).inset(4)
@@ -83,7 +83,7 @@ open class PKDetailView: PKView {
         }else {
             titleView.sizeToFit()
             titleView.snp.makeConstraints({ maker in
-                maker.height.equalTo(titleView.frame.height)
+                maker.height.equalTo(self).dividedBy(2)
                 maker.left.equalTo(self)
                 maker.top.equalTo(self).inset(4)
             })

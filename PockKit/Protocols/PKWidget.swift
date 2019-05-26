@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 @objc (PockWidget) public protocol PKWidget: class {
     var identifier:         NSTouchBarItem.Identifier   { get }
