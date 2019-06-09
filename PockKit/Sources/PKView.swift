@@ -15,13 +15,19 @@ open class PKView: NSView {
     /// Core
     private var initialPosition: NSPoint?
     
-    /// The completion to be executed on tap
+    /**
+    Override this function to define an action for user's tap.
+    */
     open func didTapHandler()        { /***/ }
     
-    /// The completion to be executed on left swipe
+    /**
+     Override this function to define an action for user's left swipe.
+     */
     open func didSwipeLeftHandler()  { /***/ }
     
-    /// The completion to be executed on right swipe
+    /**
+     Override this function to define an action for user's right swipe.
+     */
     open func didSwipeRightHandler() { /***/ }
     
     /// Override

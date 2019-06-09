@@ -36,3 +36,6 @@ Carthage/Build
 #
 Example/
 Pods/
+
+# Jazzy
+docs/
