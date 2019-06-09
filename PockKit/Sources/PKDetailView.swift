@@ -30,16 +30,13 @@ open class PKDetailView: PKView {
         self.leftToRight = leftToRight
         
         imageView = NSImageView(frame: .zero)
-        imageView.autoresizingMask = .height
         imageView.imageScaling = .scaleProportionallyDown
         
         titleView = NSTextField(labelWithString: "")
-        titleView.autoresizingMask = .height
         titleView.alignment = .left
         titleView.font = NSFont.systemFont(ofSize: 9)
         
         subtitleView = NSTextField(labelWithString: "")
-        subtitleView.autoresizingMask = .height
         subtitleView.alignment = .left
         subtitleView.font = NSFont.systemFont(ofSize: 9)
         subtitleView.textColor = NSColor(calibratedRed: 124/255, green: 131/255, blue: 127/255, alpha: 1)
@@ -70,15 +67,15 @@ open class PKDetailView: PKView {
             titleView.snp.makeConstraints({ maker in
                 maker.height.equalTo(self).dividedBy(2)
                 maker.left.equalTo(imageView.snp.right).offset(4)
-                maker.top.equalTo(imageView).inset(4)
+                maker.top.equalTo(self).inset(4)
                 maker.right.equalTo(self).inset(4)
             })
             subtitleView.sizeToFit()
             subtitleView.snp.makeConstraints({ maker in
                 maker.left.equalTo(titleView)
-                maker.top.equalTo(titleView.snp.bottom)
+                maker.top.equalTo(titleView.snp.bottom).inset(3)
                 maker.right.equalTo(titleView)
-                maker.bottom.equalTo(self)
+                maker.bottom.greaterThanOrEqualTo(self)
             })
         }else {
             titleView.sizeToFit()
@@ -89,9 +86,9 @@ open class PKDetailView: PKView {
             })
             subtitleView.sizeToFit()
             subtitleView.snp.makeConstraints({ maker in
-                maker.top.equalTo(titleView.snp.bottom)
+                maker.top.equalTo(titleView.snp.bottom).inset(3)
                 maker.left.equalTo(titleView)
-                maker.bottom.equalTo(self).inset(4)
+                maker.bottom.greaterThanOrEqualTo(self)
             })
             imageView.snp.makeConstraints({ maker in
                 maker.width.equalTo(24)

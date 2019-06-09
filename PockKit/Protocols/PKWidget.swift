@@ -9,7 +9,7 @@
 import Foundation
 import AppKit
 
-@objc (PockWidget) public protocol PKWidget: class {
+@objc (PKWidget) public protocol PKWidget: class {
     var identifier:         NSTouchBarItem.Identifier   { get }
     var customizationLabel: String                      { get set }
     var view:               NSView!                     { get set }
