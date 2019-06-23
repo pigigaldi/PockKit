@@ -24,10 +24,12 @@ Documentation can be found at https://kit.pock.dev/docs/
 
   s.platform = :osx
   s.osx.deployment_target = "10.12.2"
-  s.swift_version = "4.2"
+  s.swift_version = "5.0"
   
   s.frameworks = 'Foundation'
   s.frameworks = 'AppKit'
+  
+  s.exclude_files = ['docs/**/*']
   
   s.subspec 'Protocols' do |ss|
     ss.source_files = 'PockKit/Protocols/**/*'
