@@ -36,6 +36,10 @@ Documentation will be available soon on https://kit.pock.dev/docs/
     ss.source_files = 'PockKit/Sources/**/*'
   end
   
+  s.subspec '3rd' do |ss|
+    ss.source_files = 'PockKit/3rd/**/*'
+  end
+  
   s.dependency 'SnapKit'
 
 end
