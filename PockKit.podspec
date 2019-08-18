@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PockKit'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Core framework for building Pock widgets'
 
   s.description      = <<-DESC
@@ -21,7 +21,7 @@ Documentation will be available soon on https://kit.pock.dev/docs/
 
   s.platform = :osx
   s.osx.deployment_target = '10.12.2'
-  s.swift_version = '4.2'
+  s.swift_version = '5'
   
   s.frameworks = 'Foundation'
   s.frameworks = 'AppKit'
@@ -33,6 +33,7 @@ Documentation will be available soon on https://kit.pock.dev/docs/
   end
   
   s.subspec 'Sources' do |ss|
+    ss.dependency 'PockKit/3rd'
     ss.source_files = 'PockKit/Sources/**/*'
   end
   
