@@ -12,18 +12,32 @@ import SnapKit
 open class PKDetailView: PKView {
     
     /// Core
-    public static       let kBounceAnimationKey: String = "kBounceAnimationKey"
-    public private(set) var isAnimating:         Bool   = false
-    public              var leftToRight:         Bool   = true {
+    public static       let kBounceAnimationKey: String  = "kBounceAnimationKey"
+    public private(set) var isAnimating:         Bool    = false
+    public              var maxWidth:            CGFloat = 0 {
         didSet {
-            updateLayout()
+            updateConstraint()
+        }
+    }
+    public              var leftToRight:         Bool    = true {
+        didSet {
+            updateConstraint()
         }
     }
     
     /// UI
-    @IBOutlet public var imageView:    NSImageView!
-    @IBOutlet public var titleView:    NSTextField!
-    @IBOutlet public var subtitleView: NSTextField!
+    public var imageView:    NSImageView!
+    public var titleView:    ScrollingTextView!
+    public var subtitleView: ScrollingTextView!
+    
+    /// Variables
+    public var canScrollTitle:    Bool = true
+    public var canScrollSubtitle: Bool = true
+    public var shouldHideIcon:    Bool = false {
+        didSet {
+            updateConstraint()
+        }
+    }
     
     public convenience init(frame: NSRect = .zero, leftToRight: Bool = true) {
         self.init(frame: frame)
@@ -32,20 +46,20 @@ open class PKDetailView: PKView {
         imageView = NSImageView(frame: .zero)
         imageView.imageScaling = .scaleProportionallyDown
         
-        titleView = NSTextField(labelWithString: "")
-        titleView.alignment = .left
+        titleView = ScrollingTextView(frame: .zero)
         titleView.font = NSFont.systemFont(ofSize: 9)
+        if !canScrollTitle { titleView.speed = 0 }
         
-        subtitleView = NSTextField(labelWithString: "")
-        subtitleView.alignment = .left
+        subtitleView = ScrollingTextView(frame: .zero)
         subtitleView.font = NSFont.systemFont(ofSize: 9)
         subtitleView.textColor = NSColor(calibratedRed: 124/255, green: 131/255, blue: 127/255, alpha: 1)
+        if !canScrollSubtitle { subtitleView.speed = 0 }
         
         addSubview(imageView)
         addSubview(titleView)
         addSubview(subtitleView)
         
-        updateLayout()
+        updateConstraint()
         didLoad()
     }
     
@@ -56,42 +70,42 @@ open class PKDetailView: PKView {
     
     /// Override this function to layout subviews as you prefer.
     /// SnapKit can help you in this.
-    open func updateLayout() {
+    open func updateConstraint() {
         if leftToRight {
-            imageView.snp.makeConstraints({ maker in
-                maker.width.equalTo(24)
+            imageView.snp.remakeConstraints({ maker in
+                maker.width.equalTo(shouldHideIcon ? 0 : 24)
                 maker.top.bottom.equalTo(self)
                 maker.left.equalTo(self)
             })
-            titleView.sizeToFit()
-            titleView.snp.makeConstraints({ maker in
+            titleView.snp.remakeConstraints({ maker in
+                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
                 maker.height.equalTo(self).dividedBy(2)
                 maker.left.equalTo(imageView.snp.right).offset(4)
                 maker.top.equalTo(self).inset(4)
-                maker.right.equalTo(self).inset(4)
+                maker.right.equalToSuperview().inset(4)
             })
-            subtitleView.sizeToFit()
-            subtitleView.snp.makeConstraints({ maker in
+            subtitleView.snp.remakeConstraints({ maker in
+                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
                 maker.left.equalTo(titleView)
                 maker.top.equalTo(titleView.snp.bottom).inset(3)
                 maker.right.equalTo(titleView)
                 maker.bottom.greaterThanOrEqualTo(self)
             })
         }else {
-            titleView.sizeToFit()
-            titleView.snp.makeConstraints({ maker in
+            titleView.snp.remakeConstraints({ maker in
+                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
                 maker.height.equalTo(self).dividedBy(2)
-                maker.left.equalTo(self)
+                maker.left.equalToSuperview()
                 maker.top.equalTo(self).inset(4)
             })
-            subtitleView.sizeToFit()
-            subtitleView.snp.makeConstraints({ maker in
+            subtitleView.snp.remakeConstraints({ maker in
+                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
                 maker.top.equalTo(titleView.snp.bottom).inset(3)
                 maker.left.equalTo(titleView)
                 maker.bottom.greaterThanOrEqualTo(self)
             })
-            imageView.snp.makeConstraints({ maker in
-                maker.width.equalTo(24)
+            imageView.snp.remakeConstraints({ maker in
+                maker.width.equalTo(shouldHideIcon ? 0 : 24)
                 maker.top.bottom.equalTo(self)
                 maker.right.equalTo(self)
                 maker.left.equalTo((titleView.frame.width > subtitleView.frame.width ? titleView : subtitleView).snp.right).offset(4)
@@ -100,13 +114,11 @@ open class PKDetailView: PKView {
     }
     
     open func set(title: String?) {
-        titleView?.stringValue = title ?? "Error"
-        updateLayout()
+        titleView.setup(string: title ?? "")
     }
     
     open func set(subtitle: String?) {
-        subtitleView?.stringValue = subtitle ?? "Missing location"
-        updateLayout()
+        subtitleView.setup(string: subtitle ?? "")
     }
     
     open func set(image: NSImage?) {
