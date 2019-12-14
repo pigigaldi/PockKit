@@ -19,7 +19,7 @@ open class PKView: NSView {
     /**
     Override this property to define custom long-press delay.
     */
-    open var longPressDelay: TimeInterval = 1.5
+    open var longPressDelay: TimeInterval = 0.5
     
     /**
     Override this function to define an action for user's tap.
