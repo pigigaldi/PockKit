@@ -78,14 +78,14 @@ open class PKDetailView: PKView {
                 maker.left.equalTo(self)
             })
             titleView.snp.remakeConstraints({ maker in
-                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
+                if maxWidth > 0 { maker.width.equalTo(maxWidth).priority(.medium) }
                 maker.height.equalTo(self).dividedBy(2)
                 maker.left.equalTo(imageView.snp.right).offset(4)
-                maker.top.equalTo(self).inset(4)
+                maker.top.equalTo(self).inset(2)
                 maker.right.equalToSuperview().inset(4)
             })
             subtitleView.snp.remakeConstraints({ maker in
-                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
+                if maxWidth > 0 { maker.width.equalTo(maxWidth).priority(.medium) }
                 maker.left.equalTo(titleView)
                 maker.top.equalTo(titleView.snp.bottom).inset(3)
                 maker.right.equalTo(titleView)
@@ -93,13 +93,13 @@ open class PKDetailView: PKView {
             })
         }else {
             titleView.snp.remakeConstraints({ maker in
-                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
+                if maxWidth > 0 { maker.width.equalTo(maxWidth).priority(.medium) }
                 maker.height.equalTo(self).dividedBy(2)
                 maker.left.equalToSuperview()
-                maker.top.equalTo(self).inset(4)
+                maker.top.equalTo(self).inset(2)
             })
             subtitleView.snp.remakeConstraints({ maker in
-                if maxWidth > 0 { maker.width.equalTo(maxWidth) }
+                if maxWidth > 0 { maker.width.equalTo(maxWidth).priority(.medium) }
                 maker.top.equalTo(titleView.snp.bottom).inset(3)
                 maker.left.equalTo(titleView)
                 maker.bottom.greaterThanOrEqualTo(self)
